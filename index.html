@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.32/angular.min.js"></script>
+    <script type="text/javascript" src="calc.js"></script>
+    <style>
+      @font-face {
+        font-family: 'digital-7';
+        src: url('digital-7.ttf');
+      }
+      .display {
+        font-family: 'digital-7', monospace;
+        font-size: 2.25rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Calc</h1>
+    <div ng-app="calc-app">
+      <div ng-controller="calc-controller">
+        <table>
+          <tr><td colspan="4" align="right" class="display">{{display}}<td></tr>
+          <tr ng-repeat="row in buttons"><td ng-repeat="digit in row"><button ng-click="push(digit)">{{digit}}</button></td></tr>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
