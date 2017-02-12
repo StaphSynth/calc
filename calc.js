@@ -24,11 +24,11 @@ calcApp.controller('calc-controller', function($scope){
       return $scope.display;
     }
     //small number with a lot of decimal places?
-    var tempString = $scope.display.toString();
-    if(tempString.length > 9){
-      $scope.display = $scope.display.toFixed(9);
-    }
-    return $scope.display;
+    // var tempString = $scope.display.toString();
+    // if(tempString.length > 9){
+    //   $scope.display = $scope.display.toPrecision(9);
+    // }
+    // return $scope.display;
   };
 
   //sets up operator conditions when operator selected
@@ -78,12 +78,12 @@ calcApp.controller('calc-controller', function($scope){
     //is value a number?
     if(!isNaN(parseFloat(value))) {
       if($scope.decPoint === false) {
-        if(($scope.display === 0) && ($scope.operator === '-') && ($scope.operand === 0)) {
-          $scope.display = (($scope.display * 10) + value) * -1;
-          $scope.operator = '';
-        } else {
+        // if(($scope.display === 0) && ($scope.operator === '-') && ($scope.operand === 0)) {
+        //   $scope.display = (($scope.display * 10) + value) * -1;
+        //   $scope.operator = '';
+        // } else {
           $scope.display = ($scope.display * 10) + value;
-        }
+        // }
       } else { //if decimal point pressed
         $scope.postDecPresses++;
         $scope.display += value * Math.pow(10, ($scope.postDecPresses * -1));
