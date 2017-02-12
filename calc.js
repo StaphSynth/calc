@@ -78,7 +78,7 @@ calcApp.controller('calc-controller', function($scope){
     //is value a number?
     if(!isNaN(parseFloat(value))) {
       if($scope.decPoint === false) {
-        if(($scope.display === 0) && ($scope.operator === '-')) {
+        if(($scope.display === 0) && ($scope.operator === '-') && ($scope.operand === 0)) {
           $scope.display = (($scope.display * 10) + value) * -1;
           $scope.operator = '';
         } else {
