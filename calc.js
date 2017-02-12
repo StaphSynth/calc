@@ -78,7 +78,12 @@ calcApp.controller('calc-controller', function($scope){
     //is value a number?
     if(!isNaN(parseFloat(value))) {
       if($scope.decPoint === false) {
-        $scope.display = ($scope.display * 10) + value;
+        if(($scope.display === 0) && ($scope.operator === '-')) {
+          $scope.display = (($scope.display * 10) + value) * -1;
+          $scope.operator = '';
+        } else {
+          $scope.display = ($scope.display * 10) + value;
+        }
       } else { //if decimal point pressed
         $scope.postDecPresses++;
         $scope.display += value * Math.pow(10, ($scope.postDecPresses * -1));
