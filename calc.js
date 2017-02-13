@@ -6,7 +6,6 @@ calcApp.controller('calc-controller', function($scope){
   $scope.operand2 = '0';
   $scope.postOpInput = false;
   $scope.minus = false;
-  $scope.decPoint = false;
   $scope.operator = '';
   $scope.buttons = [
     [':)',':D','±','C'],
@@ -16,25 +15,37 @@ calcApp.controller('calc-controller', function($scope){
     ['.','0','=','*']
   ];
 
-  //provides the value to be displayed.
+  //provides the value to be displayed on screen.
+  //takes the value of the register to be displayed
+  //(either operand1 or operand2) and formats it
+  //for display on the limited size of the calc "screen"
   $scope.display = function() {
     var display;
+    //decide which register to to be displayed
     if($scope.operand1 != '0' && $scope.operand2 != '0') {
       display = $scope.operand1;
-    } else if($scope.operand1 === '0' && $scope.operand2 != '0'){
+    } else if($scope.operand1 === '0' && $scope.operand2 != '0') {
       display = $scope.operand2;
     } else {
       display = $scope.operand1;
     }
 
-    //format the strings for output
-    if(display.length > 9) {
-      var op1 = parseFloat(display);
-      op1 = op1.toExponential(2);
-      display = op1.toString();
+    //format the string for output
+
+    var limit = 8; //limit the chars to be displayed
+    //if the string contains a '.', it doesn't count as a char column, so limit++
+    if(display.includes('.') && !(display.includes('e'))) {
+      limit++;
+      if(display.length > limit) {
+        display = display.slice(0, limit)
+      }
+    } else { //if no decimal point & no 'e' (ie: a really big or really small number)
+      if(display.length > limit) {
+        var op1 = parseFloat(display);
+        op1 = op1.toExponential(2);
+        display = op1.toString();
+      }
     }
-
-
     return display;
   };
 
@@ -43,7 +54,6 @@ calcApp.controller('calc-controller', function($scope){
     $scope.operator = operator;
     $scope.operand2 = $scope.operand1;
     $scope.operand1 = '0'
-    $scope.decPoint = false;
     $scope.minus = false;
   }; //operation
 
