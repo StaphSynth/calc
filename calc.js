@@ -4,6 +4,7 @@ calcApp.controller('calc-controller', function($scope){
   //globals
   $scope.operand1 = '0';
   $scope.operand2 = '0';
+  $scope.postOpInput = false;
   $scope.minus = false;
   $scope.decPoint = false;
   $scope.operator = '';
@@ -16,16 +17,25 @@ calcApp.controller('calc-controller', function($scope){
   ];
 
   //provides the value to be displayed.
-  $scope.theDisplay = function() {
-    //format the strings
-
+  $scope.display = function() {
+    var display;
     if($scope.operand1 != '0' && $scope.operand2 != '0') {
-      return $scope.operand1;
+      display = $scope.operand1;
     } else if($scope.operand1 === '0' && $scope.operand2 != '0'){
-      return $scope.operand2;
+      display = $scope.operand2;
     } else {
-       return $scope.operand1;
+      display = $scope.operand1;
     }
+
+    //format the strings for output
+    if(display.length > 9) {
+      var op1 = parseFloat(display);
+      op1 = op1.toExponential(2);
+      display = op1.toString();
+    }
+
+
+    return display;
   };
 
   //sets up operator conditions when operator selected
@@ -39,11 +49,10 @@ calcApp.controller('calc-controller', function($scope){
 
   //call to reset the calc. Pass true if you also want to reset the display, else pass false
   $scope.reset = function(display) {
-    // if(display)
-    //   $scope.display = 0;
+    if(display)
+      $scope.operand1 = '0';
 
     $scope.operator = '';
-    $scope.operand1 = '0';
     $scope.operand2 = '0';
     $scope.minus = false;
     $scope.decPoint = false;
@@ -63,23 +72,32 @@ calcApp.controller('calc-controller', function($scope){
 
   //resolves the equation
   $scope.resolve = function() {
+    var op1 = parseFloat($scope.operand1);
+    var op2 = parseFloat($scope.operand2);
     switch($scope.operator) {
       case '':
         return;
       case '+':
-        $scope.display += $scope.operand;
+        op1 += op2;
         break;
       case '-':
-        $scope.display = $scope.operand - $scope.display;
+        op1 = op2 - op1;
         break;
       case '*':
-        $scope.display *= $scope.operand;
+        op1 *= op2;
         break;
       case '/':
-        $scope.display = $scope.operand / $scope.display;
+        if(op1 === 0) { //divide by zero error
+          $scope.operand1 = 'Error';
+          $scope.reset(false);
+          return;
+        } else {
+          op1 = op2 / op1;
+        }
         break;
     }
-    //reset globals and flags after resolution
+
+    $scope.operand1 = op1.toString();
     $scope.reset(false);
   }; //resolve
 
@@ -110,10 +128,10 @@ calcApp.controller('calc-controller', function($scope){
           $scope.negNum();
           break;
         case ':)':
-          $scope.display = 71077345;
+          $scope.operand1 = '71077345';
           break;
         case ':D':
-          $scope.display = 5318008;
+          $scope.operand1 = '5318008';
           break;
       }
     }

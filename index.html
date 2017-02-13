@@ -6,7 +6,7 @@
     <style>
       @font-face {
         font-family: 'digital-7';
-        src: url('digital-7.ttf');
+        src: url('digital-7-mono.ttf');
       }
       .display {
         font-family: 'digital-7', monospace;
@@ -30,7 +30,7 @@
     <div ng-app="calc-app">
       <div ng-controller="calc-controller">
         <table class="calTable">
-          <tr><td colspan="4" align="right" class="display" ng-bind="theDisplay()"><td></tr>
+          <tr><td colspan="4" align="right" class="display" ng-bind="display()"><td></tr>
           <tr ng-repeat="row in buttons"><td ng-repeat="digit in row"><button class="calcButton" ng-click="push(digit)">{{digit}}</button></td></tr>
         </table>
       </div>
