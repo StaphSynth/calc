@@ -13,7 +13,7 @@ calcApp.controller('calc-controller', function($scope){
   $scope.operand2 = '0';        //secondary register
   $scope.postOpInput = false;   //controls persistence of prev value on screen
   $scope.minus = false;         //neg number flag
-  $scope.justSolved = true;     //controls answer persistence
+  $scope.justSolved = false;    //controls answer persistence
   $scope.operator = '';         //operator register
   $scope.buttons = [            //button layout "ROM"
     [':)',':D','±','C'],
@@ -39,6 +39,8 @@ calcApp.controller('calc-controller', function($scope){
     }
 
     //now format the string for output
+    if(display[0] === '.')
+      display = '0' + display;
     var limit = $scope.limit; //limit the chars to be displayed
     //if the string contains a '.', it doesn't count as a char column, so limit++
     if(display.includes('.') && !(display.includes('e')) && !(display.includes('-'))) {
