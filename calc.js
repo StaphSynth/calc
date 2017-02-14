@@ -39,6 +39,12 @@ calcApp.controller('calc-controller', function($scope){
     }
 
     //now format the string for output
+    //error checking
+    if(display === 'NaN') {
+      display = 'ERROR';
+      return display;
+    }
+    //if not an error, continue with formatting...
     var limit = $scope.limit; //limit the chars to be displayed
     //if the string contains a '.', it doesn't count as a char column, so limit++
     if(display.includes('.') && !(display.includes('e')) && !(display.includes('-'))) {
