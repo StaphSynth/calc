@@ -60,9 +60,13 @@ calcApp.controller('calc-controller', function($scope){
 
   //sets up operator conditions when operator selected
   $scope.operation = function(operator) {
+    //these registers only need to be set once per operation
+    //if the user keeps hitting operator buttons during one sum, they don't change
+    if($scope.operator === '') {
+      $scope.operand2 = $scope.operand1;
+      $scope.operand1 = '0'
+    }
     $scope.operator = operator;
-    $scope.operand2 = $scope.operand1;
-    $scope.operand1 = '0'
     $scope.minus = false;
   }; //operation
 
