@@ -39,6 +39,7 @@ calcApp.controller('calc-controller', function($scope){
     }
 
     //now format the string for output
+    
     //error checking
     if(display === 'NaN') {
       display = 'ERROR';
