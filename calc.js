@@ -153,8 +153,8 @@ calcApp.controller('calc-controller', function($scope){
       if(($scope.operand1 === '0' && value !== '.') || $scope.justSolved === true) {
         $scope.operand1 = value;
         $scope.justSolved = false;
-      } else { //normal operating condition accept user input, add to number string
-        if($scope.operand1.includes('')) //dec point doesn't count towards limit
+      } else { //normal operating condition accept user input, append to number string
+        if($scope.operand1.includes('.')) //dec point doesn't count towards limit
           limit++;
         if($scope.operand1.length !== limit) //if length less than limit, keep adding to string, else don't
           $scope.operand1 = $scope.operand1.concat(value);
